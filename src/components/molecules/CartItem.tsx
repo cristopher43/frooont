@@ -16,29 +16,63 @@ type Props = {
 
 export default function CartItem({ item, onAdd, onRemove, onDelete }: Props) {
     return (
-        <div className="bg-white p-4 rounded-lg shadow-md mb-3 flex items-center gap-4">
-            <div className="flex-1">
-                <h4 className="font-bold text-lg">{item.name}</h4>
-                <p className="text-gray-600">${item.price} c/u</p>
+        <div
+            className="card bg-black text-white border-2 p-3"
+            style={{ borderColor: "#4b5563" }}
+        >
+            <div className="row align-items-center g-3">
+
+                {/* INFO PRODUCTO */}
+                <div className="col-12 col-md-4">
+                    <h5 className="fw-bold mb-1">{item.name}</h5>
+                    <p className="text-white mb-0">${item.price} c/u</p>
+                </div>
+
+                {/* CONTADOR */}
+                <div className="col-12 col-md-4 d-flex align-items-center justify-content-center gap-3">
+                    <button
+                        onClick={() => onRemove(item)}
+                        className="btn btn-sm btn-secondary"
+                    >
+                        <Minus size={16} />
+                    </button>
+
+                    {/* CANTIDAD VISIBLE */}
+                    <span
+                        className="fw-bold fs-4 px-3"
+                        style={{ color: "#22d3ee" }}
+                    >
+                        {item.cantidad}
+                    </span>
+
+                    <button
+                        onClick={() => onAdd(item)}
+                        className="btn btn-sm btn-secondary"
+                    >
+                        <Plus size={16} />
+                    </button>
+                </div>
+
+                {/* PRECIO */}
+                <div className="col-12 col-md-3 text-center text-md-end">
+                    <span
+                        className="fw-bold fs-4 text-white"
+                    >
+                        ${(item.price * item.cantidad).toFixed(2)}
+                    </span>
+
+                </div>
+
+                {/* ELIMINAR */}
+                <div className="col-12 col-md-1 text-center">
+                    <button
+                        onClick={() => onDelete(item)}
+                        className="btn btn-danger btn-sm"
+                    >
+                        <Trash2 size={16} />
+                    </button>
+                </div>
             </div>
-
-            <div className="flex items-center gap-2">
-                <button onClick={() => onRemove(item)} className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <Minus className="w-4 h-4" />
-                </button>
-
-                <span className="font-bold text-xl w-12 text-center">{item.cantidad}</span>
-
-                <button onClick={() => onAdd(item)} className="w-10 h-10 bg-gray-200 rounded-lg flex items-center justify-center">
-                    <Plus className="w-4 h-4" />
-                </button>
-            </div>
-
-            <p className="font-bold text-purple-600 text-xl w-28 text-right">${(item.price * item.cantidad).toFixed(2)}</p>
-
-            <button onClick={() => onDelete(item)} className="w-10 h-10 bg-red-500 text-white rounded-lg flex items-center justify-center">
-                <Trash2 className="w-4 h-4" />
-            </button>
         </div>
     );
 }

@@ -1,27 +1,12 @@
 import React from "react";
 
-interface ButtonProps {
+type Props = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: React.ReactNode;
-    onClick?: () => void;
-    className?: string;
-    type?: "button" | "submit" | "reset";
-}
+};
 
-export default function Button({
-                                   children,
-                                   onClick,
-                                   className = "",
-                                   type = "button",
-                               }: ButtonProps) {
+export default function Button({ children, type = "button", ...rest }: Props) {
     return (
-        <button
-            type={type}
-            onClick={(e) => {
-                e.preventDefault();
-                if (onClick) onClick();
-            }}
-            className={`px-6 py-3 rounded-lg font-bold text-lg transition-all hover:scale-105 active:scale-95 ${className}`}
-        >
+        <button type={type} {...rest}>
             {children}
         </button>
     );

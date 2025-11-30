@@ -8,33 +8,55 @@ type NavbarProps = {
     onViewCart?: () => void;
 };
 
-export default function Navbar({ usuario, cartCount = 0, onLogout, onViewCart }: NavbarProps) {
+export default function Navbar({
+                                   usuario,
+                                   cartCount = 0,
+                                   onLogout,
+                                   onViewCart,
+                               }: NavbarProps) {
     return (
-        <nav className="bg-gradient-to-r from-purple-600 to-blue-600 text-white shadow-xl sticky top-0 z-50">
-            <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-                <div className="flex items-center gap-3">
-                    <Package className="w-10 h-10" />
-                    <div>
-                        <h1 className="text-2xl font-black">GAMER STORE</h1>
-                    </div>
+        <nav className="navbar navbar-expand-lg navbar-dark sticky-top shadow"
+             style={{ background: "linear-gradient(to right, #7e22ce, #2563eb)" }}>
+
+            <div className="container">
+
+                {/* LOGO */}
+                <div className="d-flex align-items-center gap-2">
+                    <Package size={36} />
+                    <span className="navbar-brand fw-bold fs-4">GAMER STORE</span>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <Button onClick={onViewCart} className="bg-yellow-400 text-gray-900 flex items-center gap-2">
-                        <ShoppingCart className="w-5 h-5" />
-                        <span>Carrito ({cartCount})</span>
-                    </Button>
+                {/* BOTONES */}
+                <div className="d-flex align-items-center gap-3">
 
+                    {/* CARRITO */}
+                    <button
+                        onClick={onViewCart}
+                        className="btn btn-warning d-flex align-items-center gap-2"
+                    >
+                        <ShoppingCart size={18} />
+                        <span>Carrito ({cartCount})</span>
+                    </button>
+
+                    {/* USUARIO */}
                     {usuario ? (
                         <>
-                            <div className="bg-white/10 px-4 py-2 rounded-lg">{usuario.nombre}</div>
-                            <Button onClick={onLogout} className="bg-red-500 text-white">
-                                <LogOut className="w-4 h-4" />
+                            <div className="bg-light bg-opacity-25 px-3 py-2 rounded text-white">
+                                {usuario.nombre}
+                            </div>
+
+                            <button
+                                onClick={onLogout}
+                                className="btn btn-danger d-flex align-items-center gap-2"
+                            >
+                                <LogOut size={16} />
                                 Salir
-                            </Button>
+                            </button>
                         </>
                     ) : (
-                        <Button className="bg-white text-purple-600">Ingresar</Button>
+                        <button className="btn btn-light text-primary fw-semibold">
+                            Ingresar
+                        </button>
                     )}
                 </div>
             </div>

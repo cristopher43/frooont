@@ -6,12 +6,26 @@ interface BadgeProps {
     className?: string;
 }
 
-export default function Badge({ children, variant = "default", className = "" }: BadgeProps) {
-    const base = "px-2 py-1 rounded-full text-sm font-semibold";
-    const variants: Record<string,string> = {
-        default: "bg-gray-200 text-gray-800",
-        success: "bg-green-100 text-green-800",
-        danger: "bg-red-100 text-red-800",
+export default function Badge({
+                                  children,
+                                  variant = "default",
+                                  className = ""
+                              }: BadgeProps) {
+    const base =
+        "px-3 py-1 rounded-full text-sm font-bold shadow-md inline-flex items-center";
+
+    const variants: Record<string, string> = {
+        default:
+            "bg-gradient-to-r from-gray-700 to-gray-900 text-gray-200 border border-gray-500",
+        success:
+            "bg-gradient-to-r from-emerald-500 to-green-600 text-white border border-emerald-300",
+        danger:
+            "bg-gradient-to-r from-red-600 to-red-800 text-white border border-red-300",
     };
-    return <span className={`${base} ${variants[variant] || variants.default} ${className}`}>{children}</span>;
+
+    return (
+        <span className={`${base} ${variants[variant]} ${className}`}>
+            {children}
+        </span>
+    );
 }
