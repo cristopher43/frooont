@@ -1,15 +1,13 @@
-import Button from "../components/atoms/Button";
 import CartItem from "../components/molecules/CartItem";
-import { ShoppingCart } from "lucide-react";
 import Navbar from "../components/molecules/Navbar";
 
 type CartPageProps = {
-    carrito: never[];
-    usuario?: never;
+    carrito: any[];
+    usuario?: any;
     onBack?: () => void;
-    onAdd: (item: never) => void;
-    onRemove: (item: never) => void;
-    onDelete: (item: never) => void;
+    onAdd: (item: any) => void;
+    onRemove: (item: any) => void;
+    onDelete: (item: any) => void;
     onCheckout: () => void;
     onLogout?: () => void;
 };
@@ -28,41 +26,144 @@ export default function CartPage({
     const cartCount = carrito.reduce((s, item) => s + (item.cantidad || 0), 0);
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-vh-100"
+             style={{ background: 'linear-gradient(135deg, #1f2937 0%, #7e22ce 50%, #1f2937 100%)' }}>
+
             <Navbar usuario={usuario} cartCount={cartCount} onLogout={onLogout} onViewCart={() => {}} />
 
-            <div className="max-w-4xl mx-auto px-6 py-8">
-                <div className="bg-white p-6 rounded-xl shadow-lg mb-6">
-                    <div className="flex justify-between items-center mb-4">
-                        <h1 className="text-4xl font-bold text-gray-800">Tu Carrito</h1>
-                        <Button onClick={onBack} className="bg-gray-200 hover:bg-gray-300 text-gray-800">
-                            ← Seguir Comprando
-                        </Button>
+            <div className="container py-5" style={{ maxWidth: '900px' }}>
+
+                {/* Header */}
+                <div className="card bg-dark text-white border-2 mb-4"
+                     style={{ borderColor: '#a855f7' }}>
+                    <div className="card-body">
+                        <div className="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                            <div className="d-flex align-items-center gap-3">
+                                <span style={{ fontSize: '2.5rem' }}>🛒</span>
+                                <h1 className="display-5 fw-bold mb-0">TU CARRITO</h1>
+                            </div>
+                            <button
+                                onClick={onBack}
+                                className="btn btn-dark fw-bold"
+                                style={{ border: '2px solid #4b5563' }}
+                            >
+                                ← Seguir Comprando
+                            </button>
+                        </div>
+
+                        {/* Contador de items */}
+                        {carrito.length > 0 && (
+                            <div className="row g-3 mt-3">
+                                <div className="col-6">
+                                    <div className="card bg-black border-0 p-3 text-center">
+                                        <p className="small mb-1" style={{ color: '#22d3ee' }}>Items</p>
+                                        <p className="fs-4 fw-bold mb-0">{cartCount}</p>
+                                    </div>
+                                </div>
+                                <div className="col-6">
+                                    <div className="card bg-black border-0 p-3 text-center">
+                                        <p className="small mb-1" style={{ color: '#a855f7' }}>Productos</p>
+                                        <p className="fs-4 fw-bold mb-0">{carrito.length}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
 
+                {/* Carrito vacío */}
                 {carrito.length === 0 ? (
-                    <div className="bg-white p-12 rounded-xl text-center shadow-lg">
-                        <ShoppingCart className="w-24 h-24 text-gray-300 mx-auto mb-4" />
-                        <p className="text-2xl text-gray-500">Tu carrito está vacío</p>
+                    <div className="card bg-dark text-white border-2 p-5 text-center"
+                         style={{ borderColor: '#4b5563' }}>
+                        <div style={{ fontSize: '4rem' }} className="mb-3">🛒</div>
+                        <p className="fs-3 fw-bold mb-2">Tu carrito está vacío</p>
+                        <p className="text-muted mb-4">¡Agrega algunos productos para comenzar!</p>
+
+                        <button
+                            onClick={onBack}
+                            className="btn btn-lg text-white fw-bold"
+                            style={{
+                                background: 'linear-gradient(to right, #22d3ee, #3b82f6)',
+                                border: 'none'
+                            }}
+                        >
+                            Ver Productos
+                        </button>
                     </div>
                 ) : (
                     <>
-                        <div className="mb-6">
+                        {/* Lista de items */}
+                        <div className="mb-4">
                             {carrito.map((item) => (
-                                <CartItem key={item.id} item={item} onAdd={onAdd} onRemove={onRemove} onDelete={onDelete} />
+                                <div key={item.id}
+                                     className="card bg-dark text-white border-2 mb-3"
+                                     style={{ borderColor: '#4b5563' }}>
+                                    <CartItem
+                                        item={item}
+                                        onAdd={onAdd}
+                                        onRemove={onRemove}
+                                        onDelete={onDelete}
+                                    />
+                                </div>
                             ))}
                         </div>
 
-                        <div className="bg-white p-6 rounded-xl shadow-lg">
-                            <div className="flex justify-between items-center mb-6">
-                                <span className="text-3xl font-bold">TOTAL:</span>
-                                <span className="text-5xl font-bold text-purple-600">${total.toFixed(2)}</span>
+                        {/* Separador decorativo */}
+                        <hr style={{
+                            height: '3px',
+                            background: 'linear-gradient(to right, #22d3ee, #a855f7, #ec4899)',
+                            border: 'none',
+                            margin: '2rem 0'
+                        }} />
+
+                        {/* Total y checkout */}
+                        <div className="card bg-dark text-white border-2 p-4"
+                             style={{ borderColor: '#a855f7' }}>
+
+                            {/* Resumen */}
+                            <div className="mb-4">
+                                <div className="d-flex justify-content-between text-muted mb-2">
+                                    <span>Subtotal:</span>
+                                    <span>${total.toFixed(2)}</span>
+                                </div>
+                                <div className="d-flex justify-content-between mb-3">
+                                    <span className="text-muted">Envío:</span>
+                                    <span className="text-success fw-bold">GRATIS</span>
+                                </div>
+                                <hr style={{ borderColor: '#4b5563' }} />
                             </div>
 
-                            <Button onClick={onCheckout} className="w-full bg-green-600 hover:bg-green-700 text-white text-2xl py-6">
-                                PROCESAR PAGO
-                            </Button>
+                            {/* Total destacado */}
+                            <div className="p-4 rounded mb-4"
+                                 style={{ background: 'linear-gradient(to right, #fbbf24, #f97316)' }}>
+                                <div className="d-flex justify-content-between align-items-center">
+                                    <span className="fs-3 fw-bold text-dark">TOTAL:</span>
+                                    <span className="display-4 fw-bold text-dark">
+                                        ${total.toFixed(2)}
+                                    </span>
+                                </div>
+                            </div>
+
+                            {/* Botón de pago */}
+                            <button
+                                onClick={onCheckout}
+                                className="btn btn-lg w-100 text-white fw-bold mb-3"
+                                style={{
+                                    background: 'linear-gradient(to right, #10b981, #059669)',
+                                    border: 'none',
+                                    fontSize: '1.5rem',
+                                    padding: '1rem'
+                                }}
+                            >
+                                ✓ PROCESAR PAGO
+                            </button>
+
+                            {/* Mensaje de seguridad */}
+                            <div className="text-center">
+                                <p className="small text-muted mb-0">
+                                    🔒 Pago 100% seguro y encriptado
+                                </p>
+                            </div>
                         </div>
                     </>
                 )}

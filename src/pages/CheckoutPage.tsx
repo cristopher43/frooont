@@ -1,24 +1,129 @@
 import Navbar from "../components/molecules/Navbar";
 
 type Props = {
-    carrito?: never[];
+    carrito?: any[];
     onBack?: () => void;
 };
 
 export default function CheckoutPage({ carrito = [], onBack }: Props) {
     const total = carrito.reduce((s, i) => s + (i.price * i.cantidad || 0), 0);
-    return (
-        <div>
-            <Navbar cartCount={carrito.length} />
-            <div className="max-w-4xl mx-auto px-6 py-8">
-                <h1 className="text-3xl font-bold mb-4">Checkout</h1>
-                <p>Total a pagar: ${total.toFixed(2)}</p>
 
-                <div className="mt-6">
-                    <button onClick={onBack} className="px-4 py-2 bg-gray-200 rounded">
-                        Volver
-                    </button>
+    const handleFinalizarCompra = () => {
+        alert("¡Compra finalizada! 🎉");
+    };
+
+    return (
+        <div className="min-vh-100"
+             style={{ background: 'linear-gradient(135deg, #1f2937 0%, #7e22ce 50%, #1f2937 100%)' }}>
+
+            <Navbar cartCount={carrito.length} />
+
+            <div className="container py-5" style={{ maxWidth: '900px' }}>
+
+                {/* Header */}
+                <div className="d-flex align-items-center gap-3 mb-5">
+                    <span style={{ fontSize: '3rem' }}>🛒</span>
+                    <h1 className="display-4 fw-bold text-white mb-0">CHECKOUT</h1>
                 </div>
+
+                {/* Container principal */}
+                <div className="card bg-dark text-white border-2 p-4"
+                     style={{ borderColor: '#a855f7' }}>
+
+                    {/* Lista de productos */}
+                    <div className="mb-4">
+                        <h2 className="fs-3 fw-bold mb-4">📦 Resumen de Compra</h2>
+
+                        {carrito.length === 0 ? (
+                            <div className="text-center py-5">
+                                <div style={{ fontSize: '4rem' }} className="mb-3">🛒</div>
+                                <p className="text-muted fs-5">Tu carrito está vacío</p>
+                            </div>
+                        ) : (
+                            <div className="d-flex flex-column gap-3">
+                                {carrito.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="card bg-black border p-3"
+                                        style={{ borderColor: '#4b5563' }}
+                                    >
+                                        <div className="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <p className="fw-bold mb-1">{item.nombre || item.name}</p>
+                                                <p className="text-muted small mb-0">Cantidad: {item.cantidad}</p>
+                                            </div>
+                                            <div className="text-end">
+                                                <p className="fs-4 fw-bold mb-0" style={{ color: '#22d3ee' }}>
+                                                    ${(item.price * item.cantidad).toFixed(2)}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Separador decorativo */}
+                    <hr style={{
+                        height: '3px',
+                        background: 'linear-gradient(to right, #22d3ee, #a855f7, #ec4899)',
+                        border: 'none',
+                        margin: '2rem 0'
+                    }} />
+
+                    {/* Total */}
+                    <div className="p-4 rounded mb-4"
+                         style={{ background: 'linear-gradient(to right, #fbbf24, #f97316)' }}>
+                        <div className="d-flex justify-content-between align-items-center">
+                            <span className="fs-3 fw-bold text-dark">TOTAL A PAGAR:</span>
+                            <span className="display-3 fw-bold text-dark">
+                                ${total.toFixed(2)}
+                            </span>
+                        </div>
+                    </div>
+
+                    {/* Botones de acción */}
+                    <div className="row g-3">
+                        <div className="col-12 col-md-6">
+                            <button
+                                onClick={onBack}
+                                className="btn btn-lg btn-dark w-100 fw-bold"
+                                style={{ border: '2px solid #4b5563' }}
+                            >
+                                ← Volver
+                            </button>
+                        </div>
+
+                        <div className="col-12 col-md-6">
+                            <button
+                                onClick={handleFinalizarCompra}
+                                disabled={carrito.length === 0}
+                                className="btn btn-lg w-100 fw-bold"
+                                style={carrito.length === 0 ? {
+                                    background: '#4b5563',
+                                    color: '#9ca3af',
+                                    border: 'none',
+                                    cursor: 'not-allowed'
+                                } : {
+                                    background: 'linear-gradient(to right, #10b981, #059669)',
+                                    border: 'none',
+                                    color: 'white'
+                                }}
+                            >
+                                ✓ Finalizar Compra
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Mensaje de seguridad */}
+                    <div className="text-center mt-4">
+                        <p className="small text-muted mb-0">
+                            🔒 Pago seguro y protegido
+                        </p>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

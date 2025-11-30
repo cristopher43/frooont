@@ -4,40 +4,75 @@ import ErrorAlert from "../atoms/ErrorAlert.tsx";
 
 const LoginForm = ({ onSubmit, email, setEmail, password, setPassword, error }) => {
     return (
-        <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-2xl">
-            <h2 className="text-4xl font-bold text-purple-600 mb-6 text-center">Iniciar Sesión</h2>
+        <div className="max-w-md mx-auto bg-gray-800 p-8 rounded-2xl shadow-2xl border-2 border-purple-500">
 
-            <ErrorAlert message={error} />
+            {/* Header con icono */}
+            <div className="text-center mb-6">
+                <div className="text-5xl mb-3">🎮</div>
+                <h2 className="text-4xl font-black text-white">INICIAR SESIÓN</h2>
+                <div className="h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded mt-3 mx-auto w-24"></div>
+            </div>
 
-            <Input
-                label="Email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="tu@email.com"
-            />
+            {/* Error alert */}
+            {error && <ErrorAlert message={error} />}
 
-            <Input
-                label="Contraseña"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-            />
+            {/* Formulario */}
+            <div className="space-y-5">
+                <Input
+                    label="Email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="tu@email.com"
+                />
 
-            <Button
-                onClick={onSubmit}
-                className="w-full bg-purple-600 hover:bg-purple-700 text-white py-4 text-xl"
-            >
-                Entrar
-            </Button>
+                <Input
+                    label="Contraseña"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="••••••••"
+                />
 
-            <div className="mt-4 p-4 bg-blue-50 rounded-lg">
-                <p className="text-sm text-gray-600 text-center">
-                    <strong>Cuenta de prueba:</strong><br />
-                    admin@gamer.com / 123456
+                {/* Botón de login */}
+                <Button
+                    onClick={onSubmit}
+                    className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-4 text-xl font-bold rounded-lg shadow-lg transition-all hover:scale-105"
+                >
+                    ▶ Entrar
+                </Button>
+            </div>
+
+            {/* Separador */}
+            <div className="flex items-center gap-3 my-6">
+                <div className="flex-1 h-px bg-gray-700"></div>
+                <span className="text-gray-500 text-sm">O</span>
+                <div className="flex-1 h-px bg-gray-700"></div>
+            </div>
+
+            {/* Cuenta de prueba */}
+            <div className="bg-gray-900 border-2 border-cyan-500 rounded-lg p-4">
+                <p className="text-sm text-center mb-2">
+                    <span className="text-cyan-400 font-bold">💡 Cuenta de Prueba</span>
+                </p>
+                <div className="text-center">
+                    <p className="text-white font-mono text-sm">
+                        📧 admin@gamer.com
+                    </p>
+                    <p className="text-white font-mono text-sm">
+                        🔑 123456
+                    </p>
+                </div>
+            </div>
+
+            {/* Footer decorativo */}
+            <div className="mt-6 text-center">
+                <p className="text-gray-500 text-xs">
+                    🔒 Conexión segura y encriptada
                 </p>
             </div>
         </div>
     );
 };
+
+export default LoginForm;
